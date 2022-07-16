@@ -7,7 +7,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT u FROM User u WHERE u.username = :username")
-    User getUserByUsername(@Param("username")String username);
+    @Query(value = "SELECT u FROM User u WHERE u.email = :email")
+    User getUserByEmail(@Param("email")String email);
 
 }

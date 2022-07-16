@@ -1,19 +1,52 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://thymeleaf.org">
 <head>
-    <title>Spring Security Example</title>
+    <!--    Required meta tags-->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>User information-page</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Надо внедрить почту</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">with roles: <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><td><span th:each="roles : ${user.getRoles()}" th:utext="${roles.toString()}+'  '">Roles</span></td></a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+      <a th:href="@{/logout}">Logout</a>
+    </span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+<h1>User panel</h1>
+
+<div align="center">
+<br/><br/>
 <table border="1" cellpadding="10">
     <thead>
     <tr>
         <th>User ID</th>
         <th>Name</th>
-        <th>Last name<</th>
+        <th>Last name</th>
         <th>Age</th>
-        <th>Enabled</th>
+        <th>Email</th>
         <th>Role</th>
     </tr>
     </thead>
@@ -21,15 +54,25 @@
     <tr th:object="${user}">
         <td th:text="${user.id}">User ID</td>
         <td th:text="${user.username}">Name</td>
-        <td th:text="${user.lastName}">Last Name </td>
+        <td th:text="${user.lastName}">Last Name</td>
         <td th:text="${user.age}">Age</td>
-        <td th:text="${user.enabled}">Enabled</td>
-        <td><span th:each="roles : ${user.getRoles()}" th:utext= "${roles.toString()}+'  '">Roles</span></td>
+        <td th:text="${user.email}">Email</td>
+        <td><span th:each="roles : ${user.getRoles()}" th:utext="${roles.toString()}+'  '">Roles</span></td>
     </tr>
     </tbody>
 </table>
-<br><br>
-<a th:href="@{/logout}">Logout</a>
-<br><br>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</div>
 </body>
 </html>

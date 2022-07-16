@@ -51,18 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER")
-                .antMatchers("/").hasAnyAuthority("USER","ADMIN")
-                .antMatchers("/new/**").hasRole("ADMIN")
-                .antMatchers("/edit/**").hasRole("ADMIN")
-                .antMatchers("/delete/**").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(successUserHandler)
+                .formLogin().loginPage("/login").successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");;
+                .exceptionHandling();
     }
 }

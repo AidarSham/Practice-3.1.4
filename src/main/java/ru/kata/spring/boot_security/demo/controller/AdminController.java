@@ -5,32 +5,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
-public class AppController {
+//@RequestMapping("/admin")
+public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AppController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/user")
-    public String user(Model model, Principal principal) {
-        model.addAttribute("user", userService.getUserByUsername(principal.getName()));
-        return "user";
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin")
-    public String viewHomePage(Model model) {
+    public String viewHomePage(Model model, Principal principal) {
         List<User> users = userService.listAll();
+        User admin = userService.getUserByEmail(principal.getName());
         model.addAttribute("users", users);
+        model.addAttribute("email", admin.getEmail());
+        model.addAttribute("role", admin.getAllRolesString());
+        model.addAttribute("roles",roleService.getAllRoles());
 
         return "admin";
     }
@@ -43,7 +49,21 @@ public class AppController {
         return "new_user";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+//    Новый метод для поиска по роли
+    @PostMapping("/add")
+    public String addUser(@ModelAttribute User user, @RequestParam(value = "selectRoles[]") String[] arr) {
+        List<Role> setOfRoles = new ArrayList<>();
+
+        for (String s : arr) {
+            setOfRoles.add(roleService.getRoleById(Long.valueOf(s)));
+        }
+
+        user.setRoles(setOfRoles);
+        userService.save(user);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/save")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.save(user);
 
@@ -65,8 +85,4 @@ public class AppController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/403")
-    public String error403() {
-        return "403";
-    }
 }

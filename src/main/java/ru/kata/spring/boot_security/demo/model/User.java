@@ -30,8 +30,8 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "enabled")
-    private boolean enabled;
+    @Column(name = "email")
+    private String email;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
@@ -39,17 +39,27 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
+//    Получаем роли в виде String
+    public String getAllRolesString() {
+        String allRolesString = new String();
+        for (Role role: roles) {
+            allRolesString += role.toString() + " ";
+        }
+
+        return allRolesString;
+    }
+
     public User() {
 
     }
 
-    public User(Long id, String username, String lastName, int age, String password, boolean enabled, List<Role> roles) {
+    public User(Long id, String username, String lastName, int age, String password, String email, List<Role> roles) {
         this.id = id;
         this.username = username;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
-        this.enabled = enabled;
+        this.email = email;
         this.roles = roles;
     }
 

@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    public User getUserByUsername(String username) {
-        return userRepository.getUserByUsername(username);
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
     }
 
 }
