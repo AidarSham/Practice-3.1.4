@@ -5,14 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -36,11 +34,12 @@ public class AdminController {
         model.addAttribute("role", admin.getAllRolesString());
         model.addAttribute("roles",roleService.getAllRoles());
         model.addAttribute("user", new User());
+        model.addAttribute("userData", userService.getUserByEmail(principal.getName()));
 
         return "admin";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/create")
     public String showNewUserPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
@@ -48,29 +47,8 @@ public class AdminController {
         return "new_user";
     }
 
-//    Mетод для поиска по роли
-    @PostMapping("/add")
-    public String addUser(@ModelAttribute User user, @RequestParam(value = "selectRoles[]") String[] arr) {
-        List<Role> setOfRoles = new ArrayList<>();
-
-        for (String s : arr) {
-            setOfRoles.add(roleService.getRoleById(Long.valueOf(s)));
-        }
-
-        user.setRoles(setOfRoles);
-        userService.save(user);
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/save")
-    public String saveUser(@ModelAttribute("user") User user) {
-        userService.save(user);
-
-        return "redirect:/admin";
-    }
-
     @PostMapping("/edit")
-    public String editUser(@ModelAttribute User user) {
+    public String editUser(@ModelAttribute("user") User user) {
         userService.save(user);
 
         return "redirect:/admin";

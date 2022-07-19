@@ -49,34 +49,34 @@
 
         <div class="col-10 p-0">
             <div class="tab-content bg-light p-2">
-                <div class="tab-pane fade show active pl-3" style="height: 1000px;" id="user"
+                <div class="tab-pane fade show active pl-3" style="height: 900px;" id="user"
                      role="tabpanel" aria-labelledby="/user">
-                <h1>User information-page</h1>
-                <div class="pl-3 pt-1 d-flex border-top border-left border-right"><h4> About user</h4></div>
-                <div class="bg-white border p-3">
-                    <table class="table table-striped border-top">
-                        <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Name</th>
-                            <th>Last name</th>
-                            <th>Age</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:object="${user}">
-                            <td th:text="${user.id}">User ID</td>
-                            <td th:text="${user.username}">Name</td>
-                            <td th:text="${user.lastName}">Last Name</td>
-                            <td th:text="${user.age}">Age</td>
-                            <td th:text="${user.email}">Email</td>
-                            <td><span th:text="${role}"> Roles </span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <h1>User information-page</h1>
+                    <div class="pl-3 pt-1 d-flex border-top border-left border-right"><h4> About user</h4></div>
+                    <div class="bg-white border p-3">
+                        <table class="table table-striped border-top">
+                            <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Name</th>
+                                <th>Last name</th>
+                                <th>Age</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:object="${user}">
+                                <td th:text="${user.id}">User ID</td>
+                                <td th:text="${user.username}">Name</td>
+                                <td th:text="${user.lastName}">Last Name</td>
+                                <td th:text="${user.age}">Age</td>
+                                <td th:text="${user.email}">Email</td>
+                                <td><span th:text="${role}"> Roles </span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
