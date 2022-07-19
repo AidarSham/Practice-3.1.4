@@ -10,14 +10,12 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Controller
-//@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -37,6 +35,7 @@ public class AdminController {
         model.addAttribute("email", admin.getEmail());
         model.addAttribute("role", admin.getAllRolesString());
         model.addAttribute("roles",roleService.getAllRoles());
+        model.addAttribute("user", new User());
 
         return "admin";
     }
@@ -49,7 +48,7 @@ public class AdminController {
         return "new_user";
     }
 
-//    Новый метод для поиска по роли
+//    Mетод для поиска по роли
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user, @RequestParam(value = "selectRoles[]") String[] arr) {
         List<Role> setOfRoles = new ArrayList<>();
@@ -70,13 +69,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @RequestMapping("/edit/{id}")
-    public ModelAndView showEditUserPage(@PathVariable(name = "id")Long id) {
-        ModelAndView mav = new ModelAndView("edit_user");
-        User user = userService.get(id);
-        mav.addObject("user", user);
+    @PostMapping("/edit")
+    public String editUser(@ModelAttribute User user) {
+        userService.save(user);
 
-        return mav;
+        return "redirect:/admin";
     }
 
     @RequestMapping("/delete/{id}")
@@ -85,4 +82,12 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", ex);
+        mav.addObject("url", req.getRequestURL());
+        mav.setViewName("error");
+        return mav;
+    }
 }
