@@ -203,9 +203,12 @@
                                                         <button type="button" class="close"
                                                                 data-dismiss="modal"></button>
                                                     </div>
-                                                    <form th:method="DELETE"
-                                                          th:action="@{/delete/{id}(id=${user.id})}">
+                                                    <form th:action="@{/delete/{id}(id=${user.getId})}" th:method="DELETE">
                                                         <div class="modal-body text-center">
+
+                                                            <!--<form th:method="DELETE"
+                                                                  th:action="@{/delete/{id}(id=${user.id})}">
+                                                                <div class="modal-body text-center">-->
 
                                                             <div class="form-group">
                                                                 <label for="id2"
@@ -250,9 +253,10 @@
                                                             <select multiple class="form-control form-control-sm"
                                                                     id="roles2" name="listRoles" size="2" required
                                                                     disabled>
-                                                                <option th:each="role:${user.getRoles}"
+                                                                <option th:each="role:${user.getRoles()}"
                                                                         th:value="${role.id}"
-                                                                        th:text="${role.name}" class="m-2">
+                                                                        th:text="${role.name}"
+                                                                        class="m-2" disabled>
                                                                 </option>
                                                             </select>
 
@@ -331,6 +335,9 @@
                     <!-- ADD User Panel beginning -->
                 </div>
                 </div>
+
+
+
             </div>
         </div>
     </div>
