@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private String username;
 
     @Column(name = "last_name")
-    private String lastName;
+    private String lastname;
 
     @Column(name = "age")
     private int age;
@@ -40,23 +40,23 @@ public class User implements UserDetails {
     private List<Role> roles;
 
 //    Получаем роли в виде String
-    public String getAllRolesString() {
+    /*public String getAllRolesString() {
         String allRolesString = new String();
         for (Role role: roles) {
             allRolesString += role.toString() + " ";
         }
 
         return allRolesString;
-    }
+    }*/
 
     public User() {
 
     }
 
-    public User(Long id, String username, String lastName, int age, String password, String email, List<Role> roles) {
+    public User(Long id, String username, String lastname, int age, String password, String email, List<Role> roles) {
         this.id = id;
         this.username = username;
-        this.lastName = lastName;
+        this.lastname = lastname;
         this.age = age;
         this.password = password;
         this.email = email;
